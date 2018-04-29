@@ -25,8 +25,6 @@ import config
 import os
 import re
 import datetime
-import time
-# 2017-07-03 08:49:49.787  [KeyedThreadPool-60-1] INFO   - Quote[lastPrice=4640000,highestPrice=4675000,lowestPrice=4590000,volume=65738,turnover=304461420000,bidPrice1=4635000,bidVolume1=17,askPrice1=4640000,askVolume1=36,instrumentID=A3,exchangeID=] 
 
 datapat = re.compile(r'.*(?P<datetime>[0-9]{4}[\\-][0-9]{2}[\\-][0-9]{2}.*[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}).*'
                     +r'.*lastPrice=(?P<price>[0-9]*)'
