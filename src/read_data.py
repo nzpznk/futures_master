@@ -26,7 +26,7 @@ import os
 import re
 import datetime
 
-datapat = re.compile(r'.*(?P<datetime>[0-9]{4}[\\-][0-9]{2}[\\-][0-9]{2}.*[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}).*'
+datapat = re.compile(r'.*(?P<datetime>[0-9]{4}[-][0-9]{2}[-][0-9]{2}.*[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}).*'
                     +r'.*lastPrice=(?P<price>[0-9]*)'
                     +r'.*highestPrice=(?P<highp>[0-9]*)'
                     +r'.*lowestPrice=(?P<lowp>[0-9]*)'
@@ -40,22 +40,21 @@ puncpat = re.compile(r'[ -.\\:]')
 
 def read_data(indexlist):
     res = config.data_format.copy()
-    for i in indexlist:
+    for i in indexlist:#
         with open(config.data_file_list[i], 'r', encoding = 'utf-8') as fp:
             print('---', config.data_file_list[i], '---')
             for line in fp.readlines():
-                dat = re.match(datapat, line).groupdict()
-                if not dat:
-                    print(line, 'can not be parsed')
+                m = re.match(datapat, line)
+                if not m:
                     continue
+                dat = m.groupdict()
                 if not dat['id'] in config.contract_list:
-                    print(dat['id'], 'is not in constract list')
+                    # print(dat['id'], 'is not in constract list')
                     continue
                 dat['datetime'] = datetime.datetime(*[int(x) for x in re.split(puncpat, dat['datetime']+'000')])
                 res[dat['id']].append(dat)
     return res
 
 if __name__ == '__main__':
-    # for test
-    res = read_data(range(3, 5)) # read three data file in the range
-    print(res['A1'][2]['datetime'] - res['A1'][1]['datetime'])
+    res = read_data(range(1)) # read three data file in the range
+    print(res['B2'][2]['datetime'] - res['B2'][1]['datetime'])
