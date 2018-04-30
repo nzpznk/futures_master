@@ -22,9 +22,11 @@
 # 使用时传入一个文件index列表，返回指定范围内文件的数据
 
 import config
+from config import __database_dir__
 import os
 import re
 import datetime
+import pickle
 
 datapat = re.compile(r'.*(?P<datetime>[0-9]{4}[\\-][0-9]{2}[\\-][0-9]{2}.*[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}).*'
                     +r'.*lastPrice=(?P<price>[0-9]*)'
@@ -39,8 +41,8 @@ datapat = re.compile(r'.*(?P<datetime>[0-9]{4}[\\-][0-9]{2}[\\-][0-9]{2}.*[0-9]{
 puncpat = re.compile(r'[ -.\\:]')
 
 def read_data(indexlist):
-    res = config.data_format.copy()
     for i in indexlist:
+        res = config.data_format.copy()
         with open(config.data_file_list[i], 'r', encoding = 'utf-8') as fp:
             print('---', config.data_file_list[i], '---')
             for line in fp.readlines():
@@ -53,9 +55,15 @@ def read_data(indexlist):
                     continue
                 dat['datetime'] = datetime.datetime(*[int(x) for x in re.split(puncpat, dat['datetime']+'000')])
                 res[dat['id']].append(dat)
-    return res
+        with open(__database_dir__ + str(i), 'wb') as dbf:
+            pickle.dump(res, dbf)
+            dbf.close()
 
 if __name__ == '__main__':
     # for test
-    res = read_data(range(3, 5)) # read three data file in the range
-    print(res['A1'][2]['datetime'] - res['A1'][1]['datetime'])
+    #read_data(range(3, 5)) # read three data file in the range
+    f3 = open(__database_dir__ + "3", 'rb')
+    output = pickle.load(f3)
+    print(output)
+    f3.close()
+    #print(res['B2'][2]['datetime'] - res['B2'][1]['datetime'])

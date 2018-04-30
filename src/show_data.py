@@ -17,5 +17,6 @@ def show_data(contract, prop_list, data):
     plt.show()
 
 if __name__ == '__main__':
-    data = read_data(range(1, 2))
-    show_data('A1', ['price', 'bidp'], data)
+    read_data(range(3, 5))
+    #print(data)
+    #show_data('B2', ['price', 'bidp'], data)
