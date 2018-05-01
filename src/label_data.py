@@ -29,9 +29,9 @@ def __convert__(datlist):
                 li[cnt] = li[cnt-1].copy()
                 li[cnt]['datetime'] = li[cnt - 1]['datetime'] + datetime.timedelta(0, 0, 500000)
                 li[cnt]['bidv'] = li[cnt]['askv'] = 0
-        data.append([li[k][x] for x in usefulkey for k in range(d1)])
         if not i + j < n:
             continue
+        data.append([li[k][x] for x in usefulkey for k in range(d1)])
         stime = li[-1]['datetime']
         price = li[-1]['price']
         meanprice = 0
