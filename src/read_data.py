@@ -25,6 +25,7 @@ import config
 from config import __database_dir__
 import os
 import re
+import copy
 import datetime
 import pickle
 
@@ -43,7 +44,7 @@ puncpat = re.compile(r'[ -.\\:]')
 def read_to_database(indexlist):
     for i in indexlist:
         if os.path.exists(__database_dir__ + str(i)) == False:
-            res = config.data_format.copy()
+            res = copy.deepcopy(config.data_format)
             with open(config.data_file_list[i], 'r', encoding='utf-8') as fp:
                 print('---', config.data_file_list[i], '---')
                 for line in fp.readlines():
@@ -72,8 +73,5 @@ def read_data(indexlist):
 if __name__ == '__main__':
     # for test
     #read_data(range(3, 5)) # read three data file in the range
-    read_to_database(range(3))
-    res = read_data(range(3))
-    if not res:
-        print('none')
+    read_to_database(range(108))
     #print(res['B2'][2]['datetime'] - res['B2'][1]['datetime'])

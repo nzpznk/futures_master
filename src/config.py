@@ -4,6 +4,8 @@ __data_dir__ = '../futuresData/'
 
 __database_dir__ = '../myDatabase/'
 
+__models_dir__ = '../myModels/'
+
 data_file_list = [__data_dir__ + x for x in os.listdir(__data_dir__)]
 
 data_file_list = sorted(data_file_list)
