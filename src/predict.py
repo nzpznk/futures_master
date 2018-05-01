@@ -7,4 +7,3 @@ def predict(class_name, test_sample):
     with open(model_path, 'rb') as mdf:
         classifier =  pickle.load(mdf)
     return classifier.predict(test_sample).tolist()
-
