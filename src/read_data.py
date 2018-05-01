@@ -55,6 +55,8 @@ def read_to_database(indexlist):
                         # print(dat['id'], 'is not in constract list')
                         continue
                     dat['datetime'] = datetime.datetime(*[int(x) for x in re.split(puncpat, dat['datetime'] + '000')])
+                    for key in config.usefulkey:
+                        dat[key] = int(dat[key])
                     res[dat['id']].append(dat)
             with open(__database_dir__ + str(i), 'wb') as dbf:
                 pickle.dump(res, dbf)
@@ -66,7 +68,7 @@ def read_data(indexlist):
         with open(__database_dir__ + str(i), 'rb') as dbf:
             tmp = pickle.load(dbf)
         for key in res:
-            res[key].append(tmp[key])
+            res[key].extend(tmp[key])
     return res
 
 if __name__ == '__main__':
