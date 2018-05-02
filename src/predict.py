@@ -18,5 +18,5 @@ for i in contract_list:
     prediction = predict(i, labeled_sample[0][i])
     for j in range(len(prediction)):
         result.append(prediction[j] + 3 * labeled_sample[1][i][j])
-    accuracy = (result.count(8)+result.count(0))/(result.count(0)+result.count(2)+result.count(6)+result.count(8))
+    accuracy = (result.count(8)+result.count(0))/(result.count(0)+result.count(0)+result.count(2)+result.count(6)+result.count(8))
     print('Model', i, 'accuracy : ',accuracy)
