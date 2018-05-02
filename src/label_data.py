@@ -55,7 +55,7 @@ def extract_feature_1(data, label):
         mean = sum(tot) / (svol + 0.1)
         return [*(sum(tot[4*i:4*(i+1)]) / (sum(vol[4*i:4*(i+1)])+0.1) - mean for i in range(5)), max(pri) - mean, min(pri) - mean, svol, mean]
     feature_vec = [cal_feature(x) for x in data]
-    feature_vec_new = [x[:-1] for x in feature_vec]
+    #feature_vec_new = [x[:-1] for x in feature_vec]
     label_vec = []
     for i in range(len(label)):
         if not label[i]:
@@ -78,6 +78,19 @@ def extract_feature_1(data, label):
     return feature_vec, label_vec
 
 def get_labeled_data(indexlist, extract_fun = extract_feature_1):
+    data = copy.deepcopy(data_format)
+    data_tot = copy.deepcopy(data_format)
+    label = copy.deepcopy(data_format)
+    label_tot = copy.deepcopy(data_format)
+    for i in indexlist:
+        with open(__database_dir__ + str(i) + 'extracted', 'rb') as dbf:
+            (data, label) = pickle.load(dbf)
+            for key in data:
+                data_tot[key].extend([x[:-1] for x in data[key]])
+                label_tot[key].extend(label[key])
+    return data_tot, label_tot
+
+def get_labeled_data_old(indexlist, extract_fun = extract_feature_1):
     data = read_data(indexlist)
     label = copy.deepcopy(data_format)
     for key, val in data.items():
@@ -87,9 +100,9 @@ def get_labeled_data(indexlist, extract_fun = extract_feature_1):
 def extract_to_database(indexlist, extract_fun = extract_feature_1):
     for i in indexlist:
         if os.path.exists(__database_dir__ + str(i) + 'extracted') == False:
-            tmp = get_labeled_data([i])
+            tmp = get_labeled_data_old([i])
             with open(__database_dir__ + str(i) + 'extracted', 'wb') as dbf:
                 pickle.dump(tmp, dbf)
 
 if __name__ == '__main__':
-    extract_to_database(range(3))
+    extract_to_database(range(108))

@@ -16,6 +16,10 @@ data_format = {'A1':[], 'A3':[], 'B2':[], 'B3':[]}
 
 usefulkey = ['highp', 'lowp', 'price', 'askp', 'bidp', 'askv', 'bidv']
 
+test_sample = [0,1,2,3,4,103,104,105,106,107]
+
+train_sample = range(5,103)
+
 dat_len = 10
 predict_len = 20
 
