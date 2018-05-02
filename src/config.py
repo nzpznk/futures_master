@@ -17,6 +17,6 @@ data_format = {'A1':[], 'A3':[], 'B2':[], 'B3':[]}
 usefulkey = ['highp', 'lowp', 'price', 'askp', 'bidp', 'askv', 'bidv']
 
 dat_len = 10
-predict_len = 10
+predict_len = 20
 
 theta = 0.001
