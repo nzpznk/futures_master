@@ -1,5 +1,7 @@
 futures_master
 
+周沁泓 2016010493 钮泽平 2015010467
+
 运行说明：
 
 - 测试：运行```predict.py```使用```myModels/```目录下的模型进行测试集上的预测
@@ -12,3 +14,4 @@ futures_master
 1. 提交的文件中包含模型，可以直接运行测试；
 2. 数据生成需要将原始数据集拷贝入featuresData目录下，依次运行```read_data.py```和```label_data.py```用于生成训练需要的的带标记的数据（myDatabase目录下的extract文件）。
 3. 生成带标记的数据后可以运行```train.py```进行训练
+
