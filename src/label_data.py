@@ -3,6 +3,9 @@ from config import dat_len, predict_len, data_file_list, data_format, theta, use
 import datetime
 import copy
 import math
+import pickle
+import os
+from config import __database_dir__
 
 to_sec = lambda dt:(dt.seconds + dt.microseconds/1e6)
 
@@ -52,6 +55,7 @@ def extract_feature_1(data, label):
         mean = sum(tot) / (svol + 0.1)
         return [*(sum(tot[4*i:4*(i+1)]) / (sum(vol[4*i:4*(i+1)])+0.1) - mean for i in range(5)), max(pri) - mean, min(pri) - mean, svol, mean]
     feature_vec = [cal_feature(x) for x in data]
+    feature_vec_new = [x[:-1] for x in feature_vec]
     label_vec = []
     for i in range(len(label)):
         if not label[i]:
@@ -60,8 +64,11 @@ def extract_feature_1(data, label):
         vol = [min(d['bidv'], d['askv']) for d in label[i]]
         pri = [d['price'] for d in label[i]]
         tot = [vol[i] * pri[i] for i in range(len(vol))]
-        nextp = sum(tot) / sum(vol)
-        ratio = nextp / feature_vec[i][-1]
+        nextp = sum(tot) / (sum(vol) + 0.1)
+        if feature_vec[i][-1] != 0:
+            ratio = nextp / feature_vec[i][-1]
+        else:
+            ratio = 1
         if ratio < 1-theta:
             label_vec.append(0)
         elif 1-theta <= ratio <= 1+theta:
@@ -77,11 +84,12 @@ def get_labeled_data(indexlist, extract_fun = extract_feature_1):
         data[key], label[key] = extract_fun(*__convert__(val))
     return data, label
 
+def extract_to_database(indexlist, extract_fun = extract_feature_1):
+    for i in indexlist:
+        if os.path.exists(__database_dir__ + str(i) + 'extracted') == False:
+            tmp = get_labeled_data([i])
+            with open(__database_dir__ + str(i) + 'extracted', 'wb') as dbf:
+                pickle.dump(tmp, dbf)
+
 if __name__ == '__main__':
-    data, label = get_labeled_data([0], extract_feature_1)
-    for i in range(100):
-        print(data['A1'][i], label['A1'][i])
-    numup = len([x for x in label['A1'] if x == 2])
-    numdown = len([x for x in label['A1'] if x == 0])
-    numstable = len([x for x in label['A1'] if x == 1])
-    print(numup, numdown, numstable)
+    extract_to_database(range(3))

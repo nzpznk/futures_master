@@ -6,13 +6,13 @@ from numpy import random
 import pickle
 
 def train(class_name, sample, label):
+    model_path = __models_dir__ + class_name
     classifier = linear_model.SGDClassifier(max_iter=100000,tol=0.01,warm_start='true')
     classifier.fit(sample, label)
-    model_path = __models_dir__ + class_name
     with open(model_path, 'wb') as mdf:
         pickle.dump(classifier, mdf)
 
-labeled_sample = get_labeled_data(range(40))
+labeled_sample = get_labeled_data(range(20))
 train_sample = {}
 train_label = {}
 print('loaded')
