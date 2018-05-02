@@ -9,12 +9,11 @@ def predict(class_name, test_sample):
         classifier =  pickle.load(mdf)
     return classifier.predict(test_sample).tolist()
 
-labeled_sample = get_labeled_data([0])
+labeled_sample = get_labeled_data([3])
 print('loaded')
 for i in ['A1', 'A3']:
     result = []
     prediction = predict(i, labeled_sample[0][i])
-    print(prediction)
     for j in range(len(prediction)):
-        result.append(prediction[j] - labeled_sample[1][i][j])
-    print(result.count(0)/len(prediction))
+        result.append(prediction[j] + 3 * labeled_sample[1][i][j])
+    print((result.count(8)+result.count(0))/(labeled_sample[1][i].count(0)+labeled_sample[1][i].count(2)))

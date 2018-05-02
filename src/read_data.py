@@ -66,6 +66,7 @@ def read_data(indexlist):
     res = config.data_format.copy()
     tmp = config.data_format.copy()
     for i in indexlist:
+        print(i)
         with open(__database_dir__ + str(i), 'rb') as dbf:
             tmp = pickle.load(dbf)
         for key in res:
