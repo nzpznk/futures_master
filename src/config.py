@@ -23,4 +23,4 @@ train_sample = range(5,103)
 dat_len = 10
 predict_len = 20
 
-theta = 0.0001
+theta = 0.0005
