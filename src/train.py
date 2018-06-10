@@ -8,7 +8,7 @@ import pickle
 
 def train(class_name, sample, label):
     model_path = __models_dir__ + class_name
-    classifier = linear_model.SGDClassifier(max_iter=10000,tol=0.01,warm_start='true')
+    classifier = linear_model.SGDClassifier(max_iter=10000,tol=0.01,warm_start='true', verbose=3)
     classifier.fit(sample, label)
     with open(model_path, 'wb') as mdf:
         pickle.dump(classifier, mdf)

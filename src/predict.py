@@ -18,5 +18,11 @@ for i in contract_list:
     prediction = predict(i, labeled_sample[0][i])
     for j in range(len(prediction)):
         result.append(prediction[j] + 3 * labeled_sample[1][i][j])
-    accuracy = (result.count(8)+result.count(0))/(result.count(0)+result.count(0)+result.count(2)+result.count(6)+result.count(8))
+    accuracy = (result.count(8) + result.count(4) + result.count(0)) / len(result)
+    recall_up = result.count(8) / (result.count(6) + result.count(7) + result.count(8))
+    recall_down = result.count(0) / (result.count(0) + result.count(1) + result.count(2))
+    recall_flat = result.count(4) / (result.count(3) + result.count(4) + result.count(5))
     print('Model', i, 'accuracy : ',accuracy)
+    print('Model', i, 'recall up : ',recall_up)
+    print('Model', i, 'recall down : ',recall_down)
+    print('Model', i, 'recall flat : ',recall_flat, '\n')

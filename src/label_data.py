@@ -86,7 +86,7 @@ def get_labeled_data(indexlist, extract_fun = extract_feature_1):
         with open(__database_dir__ + str(i) + 'extracted', 'rb') as dbf:
             (data, label) = pickle.load(dbf)
             for key in data:
-                data_tot[key].extend([x[:-1] for x in data[key]])
+                data_tot[key].extend([x[:] for x in data[key]])
                 label_tot[key].extend(label[key])
     return data_tot, label_tot
 
@@ -105,4 +105,4 @@ def extract_to_database(indexlist, extract_fun = extract_feature_1):
                 pickle.dump(tmp, dbf)
 
 if __name__ == '__main__':
-    extract_to_database(range(108))
+    extract_to_database(range(1))
