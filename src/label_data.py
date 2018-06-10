@@ -15,8 +15,8 @@ def __convert__(datlist):
     data, label = [], []
     n = len(datlist)
     d1 = math.floor(dat_len / 0.5)
-    dim = d1 * 7
-    d2 = math.floor(predict_len / 0.5)
+    # dim = d1 * 7
+    # d2 = math.floor(predict_len / 0.5)
     for i in range(n):
         datli = [0 for x in range(20)]
         datlab = []
@@ -77,7 +77,7 @@ def extract_feature_1(data, label):
             label_vec.append(2)
     return feature_vec, label_vec
 
-def get_labeled_data(indexlist, extract_fun = extract_feature_1):
+def get_labeled_data(indexlist):
     data = copy.deepcopy(data_format)
     data_tot = copy.deepcopy(data_format)
     label = copy.deepcopy(data_format)
@@ -86,7 +86,7 @@ def get_labeled_data(indexlist, extract_fun = extract_feature_1):
         with open(__database_dir__ + str(i) + 'extracted', 'rb') as dbf:
             (data, label) = pickle.load(dbf)
             for key in data:
-                data_tot[key].extend([x[:-1] for x in data[key]])
+                data_tot[key].extend([x[:] for x in data[key]])
                 label_tot[key].extend(label[key])
     return data_tot, label_tot
 
@@ -105,4 +105,4 @@ def extract_to_database(indexlist, extract_fun = extract_feature_1):
                 pickle.dump(tmp, dbf)
 
 if __name__ == '__main__':
-    extract_to_database(range(108))
+    extract_to_database(range(10, 108))
