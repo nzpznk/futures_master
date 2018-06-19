@@ -1,7 +1,8 @@
 futuresData/
-myDatabase/
+myDatabase*/
+myModels/
+labeled_data/
 .idea/
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

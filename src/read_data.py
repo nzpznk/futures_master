@@ -59,7 +59,7 @@ def read_to_database(indexlist):
                     for key in config.usefulkey:
                         dat[key] = int(dat[key])
                     res[dat['id']].append(dat)
-            with open(__database_dir__ + str(i), 'wb') as dbf:
+            with open(__database_dir__ + 'formatted_data_' + str(i), 'wb') as dbf:
                 pickle.dump(res, dbf)
 
 def read_data(indexlist):
@@ -67,7 +67,7 @@ def read_data(indexlist):
     tmp = copy.deepcopy(config.data_format)
     for i in indexlist:
         print(i)
-        with open(__database_dir__ + str(i), 'rb') as dbf:
+        with open(__database_dir__ + 'formatted_data_' + str(i), 'rb') as dbf:
             tmp = pickle.load(dbf)
         for key in res:
             res[key].extend(tmp[key])
