@@ -49,7 +49,7 @@ def show_data(contract, prop_list, data, label):
     plt.plot(xs, ys, 'k', linewidth=1)
     plt.plot(xs, fall_masked, 'r', linewidth=1)
     plt.plot(xs, rise_masked, 'g', linewidth=1)
-    plt.savefig('../pictures/trends.png', dpi=120)
+    plt.savefig('./pictures/trends.png', dpi=120)
     plt.show()
 
 
