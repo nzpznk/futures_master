@@ -30,10 +30,10 @@ dates = [re.match(datepat, x).groupdict() for x in dates]
 dates = [datetime(year = int(d['year']), month = int(d['month']), day = int(d['day'])) for d in dates]
 
 # use 5 miniutes to predict [t+5s, t+20s]
-seg_time = 5
+seg_time = 10
 train_time = 300
 predict_st = 5
-predict_ed = 20
+predict_ed = 40
 
 theta = 0.0015
 

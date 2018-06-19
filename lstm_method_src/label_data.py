@@ -54,15 +54,36 @@ def label_and_dump(file_num, dat_name, lab_name, train_or_test):
         fp.create_dataset('dataset', data = np.array(dataset))
         fp.create_dataset('label', data = np.array(label))
 
+# 输入: 输入期货名,被预测期货名,训练集或者测试集
+# 输出: dataset, label
+def get_labeled_data(dat_name, lab_name, train_or_test):
+    if train_or_test == 'train_':
+        file_num_list = train_list
+    elif train_or_test == 'test_':
+        file_num_list = test_list
+    else:
+        print(" train_or_test should be 'train_' or 'test_' ")
+        return None
+    dataset = np.zeros((0, train_time // seg_time, seg_time * 2))
+    label = np.zeros((0))
+    for i in file_num_list:
+        store_dir = __labeled_data_dir__ + train_or_test + lab_name + '/' + str(i) + '_' + dat_name + '_' + lab_name + '.h5'
+        with h5py.File(store_dir, 'r') as fp:
+            dataset = np.vstack( (dataset, np.array(fp['dataset'])) )
+            label = np.hstack( (label, np.array(fp['label'])) )
+    return dataset, label
+
 def main():
     for lab_name in contract_list:
         for train_name in contract_list:
             for i in train_list:
                 label_and_dump(i, train_name, lab_name, 'train_')
+            print('finished dataset_train_' + train_name + '_' + lab_name)
     for lab_name in contract_list:
         for train_name in contract_list:
             for i in test_list:
                 label_and_dump(i, train_name, lab_name, 'test_')
+            print('finished dataset_test_' + train_name + '_' + lab_name)
 
 if __name__ == '__main__':
     main()
