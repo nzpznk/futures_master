@@ -18,7 +18,7 @@ contract_list = ['A1', 'A3', 'B2', 'B3']
 
 data_format = {'A1':[], 'A3':[], 'B2':[], 'B3':[]}
 
-usefulkey = ['highp', 'lowp', 'price', 'askp', 'bidp', 'askv', 'bidv']
+usefulkey = ['highp', 'lowp', 'price', 'askp', 'bidp', 'askv', 'bidv', 'turnover', 'volume']
 
 test_list = [i for i in range(32, 54)]
 
