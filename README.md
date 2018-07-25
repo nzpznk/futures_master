@@ -2,29 +2,25 @@
 
 周沁泓 2016010493 钮泽平 2015010467
 
-修改说明：（2018.6.10）
+### 目录结构说明:
 
-1. 原报告重命名为```report_ori.pdf```，新报告为```report.pdf```
-2. 此次提交主要对之前的源码进行一些除错，主要增加了可视化部分对原始数据进行分析，并计算了预测后的正确率与召回率。作业使用之前编写的源码，可利用jupyter notebook进行交互式运行，位于```./src/visualization.ipynb```
-3. ```./src/visualization.ipynb```导出为```report_latest.pdf```放置于根目录下
+- ```futuresData```为训练数据文件夹
+- ```myDatabase```, ```labeled_data```为中间数据存储的目录
+- ```lstm_method_src```为源码目录
+- ```lstm_model.html```为notebook文件导出的html文件, 方便查看
+- ```report.pdf```大作业报告
 
-此次修改分工如下：
+### 配置文件说明:
 
-周沁泓：原始期货数据标注结果可视化与召回率计算
+- config.py文件为配置文件
+- 修改theta即更改涨跌准则
+- 修改predict_st,predict_ed即为预测未来[predict_st, predict_ed]秒区间的数据
+- 修改seg_time可以更改提取训练数据时的采样间隔
 
-钮泽平：特征提取后的高维数据可视化与文档撰写
+### 运行说明：
 
-------------------------------- 分割线 -------------------------
+1. 将futuresData数据集拷贝进对应的目录
 
-运行说明：
+2. 进入```futures_master/lstm_method/```目录下,依次运行```read_data.py```, ```process_data.py```, ```label_data.py```进行数据的预处理.
 
-- 测试：运行```predict.py```使用```myModels/```目录下的模型进行测试集上的预测
-
-- 数据生成：```futuresData/```目录下为数据集，初次运行 首先运行```read_data.py```将数据提取并存入```myDatabase/```目录下，再运行```label_data.py```生成带标记的数据存入```myDatabase/```目录下
-
-- 训练：运行```train.py```使用myDatabase目录下的extract文件训练模型，生成模型存储在```myModels/```目录下
-
-注意：
-1. 提交的文件中包含模型，可以直接运行测试；
-2. 数据生成需要将原始数据集拷贝入featuresData目录下，依次运行```read_data.py```和```label_data.py```用于生成训练需要的的带标记的数据（myDatabase目录下的extract文件）。
-3. 生成带标记的数据后可以运行```train.py```进行训练
+3. 运行```jupyter notebook```, 打开notebook文件```futures_master/lstm_method/lstm_model.ipynb```即可运行, 进行训练与预测.

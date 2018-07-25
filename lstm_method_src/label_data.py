@@ -38,8 +38,9 @@ def label_and_dump(file_num, dat_name, lab_name, train_or_test):
     # 所以合理的i应该小于(len(y)-data_len-ed_len) // seg_len
     seg_num = min((len(x_time) - data_len) // seg_len, (len(y_time) - data_len - ed_len) // seg_len)
     for i in range(seg_num):
+        dataset.append(x_price[i*seg_len:i*seg_len+data_len]) # 更改为直接存入600维数据
         # 增加一个样本, 样本包含data_time时长数据,有data_len维度,以seg_len为一个时间步输入数据长度,共有data_len//seg_len时间步
-        dataset.append([ x_price[(i+j)*seg_len:seg_len*(i+j+1)] for j in range(data_len // seg_len) ])
+        # dataset.append([ x_price[(i+j)*seg_len:seg_len*(i+j+1)] for j in range(data_len // seg_len) ])
         delta = cal_delta(y_price, i*seg_len+data_len, i*seg_len+data_len+st_len, i*seg_len+data_len+ed_len)
         # 标注
         if delta <= -theta:
@@ -64,7 +65,8 @@ def get_labeled_data(dat_name, lab_name, train_or_test):
     else:
         print(" train_or_test should be 'train_' or 'test_' ")
         return None
-    dataset = np.zeros((0, train_time // seg_time, seg_time * 2))
+    # dataset = np.zeros((0, train_time // seg_time, seg_time * 2))
+    dataset = np.zeros((0, train_time * 2))
     label = np.zeros((0))
     for i in file_num_list:
         store_dir = __labeled_data_dir__ + train_or_test + lab_name + '/' + str(i) + '_' + dat_name + '_' + lab_name + '.h5'
